@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="CSS/common.css" />
+    <script src="JS/common.js" defer></script>
+  </head>
+  <body>
+    <!--!--------------------------------------------- Header ----------------------------------------------->
+    <header></header>
+    <!--!--------------------------------------------- Main Body ----------------------------------------------->
+    <main>
+      <section id="Home">
+        <h1>Profile</h1>
+        <div id="ProfileContainer">
+          <table id="tablebox"></table>
+        </div>
+        <div class="flex">
+          <a href="editprofile.html">Edit </a>
+          <button id="Logout">Logout</button>
+          <a class="gotohome" href="index.html">Go to Home</a>
+        </div>
+      </section>
+    </main>
+    <!--!--------------------------------------------- Footer ----------------------------------------------->
+    <footer></footer>
+  </body>
+</html>
+<script>
+  let token = localStorage.getItem("token");
+  let user = JSON.parse(localStorage.getItem("user"));
+  if (!user) {
+    alert("Please Login ");
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 700);
+  } else {
+    RenderData(user);
+  }
+  Logout.addEventListener("click", () => {
+    localStorage.clear();
+    alert("Loggin Out");
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 1000);
+  });
+  function RenderData(item) {
+    let tablebox = document.getElementById("tablebox");
+    let data = `
+           <thead>
+              <td>Field</td>
+              <td>Details</td>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Name</td>
+                <td>${item.name}</td>
+              </tr>
+              <tr>
+                <td>Image</td>
+                <td><img width="70px" style="border-radius:50%" id="profileimage" src="${item.image}" alt=""></td>
+              </tr>
+              <tr>
+                <td>Bio</td>
+                <td>${item.bio}</td>
+              </tr>
+              <tr>
+                <td>email</td>
+                <td>${item.email}</td>
+              </tr>
+              <tr>
+                <td>phone</td>
+                <td>${item.phone}</td>
+              </tr>
+            </tbody>
+  `;
+    tablebox.innerHTML = data;
+  }
+</script>
